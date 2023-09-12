@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage('1. Pull code') {
+            steps {
+                echo 'Pull code'
+                git branch: 'main', url: 'https://github.com/Thanetl/pipline-after-sale.git'
+            }
+        }
+        stage('1.2 Scan Code') {
+            
+        }
+        stage('2. Build images') {
+            steps {
+                echo 'Build'
+                sh 'docker compose build app'
+            }
+        }
+        stage('3. Push image to registry') {
+            
+        }
+        stage('4. Deploy on dev server') {
+            steps {
+                sh 'docker compose up -d app'
+            }
+        }
+        stage('5. API testing') {
+           
+        }
+        stage('6. UI testing') {
+            
+        }
+    }
+}

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    image: after-sale-api:latest
+    container_name: after-sale-api
+    build: 
+      context: ./after-sale-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/aftersaledb
+      - SPRING_DATASOURCE_USERNAME=dcs
+      - SPRING_DATASOURCE_PASSWORD=P@ssword
+    depends_on:
+      - db
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: aftersaledb
+      POSTGRES_USER: dcs
+      POSTGRES_PASSWORD: P@ssword
+    ports:
+      - "5432:5432"
+
+  sonarscanner:
+    image: sonarsource/sonar-scanner-cli
+    environment:
+      - SONAR_HOST_URL=http://10.9.50.224:9000
+      - SONAR_LOGIN=admin
+      - SONAR_PASSWORD=P@ssw0rd
+      - SONAR_PROJECT_BASE_DIR=/api
+    volumes:
+      - ./after-sale-api:/api
