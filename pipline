@@ -13,7 +13,7 @@ pipeline {
         stage('2. Build images') {
             steps {
                 echo 'Build'
-                sh 'docker compose build app'
+                sh 'docker compose build api'
             }
         }
         stage('3. Push image to registry') {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('4. Deploy on dev server') {
             steps {
-                sh 'docker compose up -d app'
+                sh 'docker compose up -d api'
             }
         }
         stage('5. API testing') {
