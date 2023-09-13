@@ -9,11 +9,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/aftersaledb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/aftersaledb
       - SPRING_DATASOURCE_USERNAME=dcs
       - SPRING_DATASOURCE_PASSWORD=P@ssword
     depends_on:
-      - db
+      - postgres
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
       interval: 5s
@@ -21,7 +21,7 @@ services:
       retries: 5
       start_period: 5s
 
-  db:
+  postgres:
     image: postgres:latest
     container_name: postgres-db
     environment:
@@ -30,13 +30,15 @@ services:
       POSTGRES_PASSWORD: P@ssword
     ports:
       - "5432:5432"
-
-  sonarscanner:
-    image: sonarsource/sonar-scanner-cli
-    environment:
-      - SONAR_HOST_URL=http://10.9.50.224:9000
-      - SONAR_LOGIN=admin
-      - SONAR_PASSWORD=P@ssw0rd
-      - SONAR_PROJECT_BASE_DIR=/api
     volumes:
-      - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # sonarscanner:
+  #   image: sonarsource/sonar-scanner-cli
+  #   environment:
+  #     - SONAR_HOST_URL=http://10.9.50.224:9000
+  #     - SONAR_LOGIN=admin
+  #     - SONAR_PASSWORD=P@ssw0rd
+  #     - SONAR_PROJECT_BASE_DIR=/api
+  #   volumes:
+  #     - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
