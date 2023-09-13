@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   api:
-    image: after-sale-api:latest
+    build:
+      context: ./api/after-sale-api  # Replace with the actual path to your project directory
+      dockerfile: Dockerfile  # Specify the name of your Dockerfile if it's not named "Dockerfile"
     container_name: after-sale-api
-    build: 
-      context: ./after-sale-api
     ports:
       - "8080:8080"
     environment:
@@ -39,4 +39,4 @@ services:
       - SONAR_PASSWORD=P@ssw0rd
       - SONAR_PROJECT_BASE_DIR=/api
     volumes:
-      - ./after-sale-api:/api
+      - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
