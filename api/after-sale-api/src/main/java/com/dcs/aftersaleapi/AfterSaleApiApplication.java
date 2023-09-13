@@ -1,4 +1,4 @@
-package com.dcs.api.aftersaleapi;
+package com.dcs.aftersaleapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
