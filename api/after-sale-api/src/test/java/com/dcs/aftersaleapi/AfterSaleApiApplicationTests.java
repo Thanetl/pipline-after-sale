@@ -8,6 +8,7 @@ class AfterSaleApiApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Do nothing
 	}
 
 }

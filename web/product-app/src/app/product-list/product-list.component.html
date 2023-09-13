@@ -1,0 +1,24 @@
+<h1>Product List</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <!-- Add other table headers as needed based on your Product model -->
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.description }}</td>
+      <!-- Add other table columns as needed based on your Product model -->
+      <td>
+        <a routerLink="/products/edit/{{ product.id }}">Edit</a>
+        <a (click)="deleteProduct(product.id)">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

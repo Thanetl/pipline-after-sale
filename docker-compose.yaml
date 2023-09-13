@@ -7,11 +7,11 @@ services:
       dockerfile: Dockerfile  # Specify the name of your Dockerfile if it's not named "Dockerfile"
     container_name: product-app
     ports:
-      - "4200:4200"  # Expose Angular development server port
-    working_dir: /app
-    command: ["ng", "serve", "--host", "0.0.0.0"]
-    volumes:
-      - ./product-app:/app  # Mount your Angular project directory into the container
+      - "80:80"  # Expose Angular development server port
+    # working_dir: /app
+    # command: ["npm", "start"]  # Adjust the start command as needed
+    # volumes:
+    #   - ./web/product-app:/app  # Mount your Angular project directory into the container
     depends_on:
       - api  # Optionally, if you have a backend API service
 
@@ -47,12 +47,12 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  sonarscanner:
-    image: sonarsource/sonar-scanner-cli
-    environment:
-      - SONAR_HOST_URL=http://10.9.50.224:9000
-      - SONAR_LOGIN=admin
-      - SONAR_PASSWORD=P@ssw0rd
-      - SONAR_PROJECT_BASE_DIR=/api
-    volumes:
-      - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
+  # sonarscanner:
+  #   image: sonarsource/sonar-scanner-cli
+  #   environment:
+  #     - SONAR_HOST_URL=http://10.9.50.224:9000
+  #     - SONAR_LOGIN=admin
+  #     - SONAR_PASSWORD=P@ssw0rd
+  #     - SONAR_PROJECT_BASE_DIR=/api
+  #   volumes:
+  #     - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
