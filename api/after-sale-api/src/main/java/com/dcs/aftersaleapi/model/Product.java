@@ -41,4 +41,13 @@ public class Product {
     }
 
     // Constructors
+    public Product() {
+        // Default constructor
+    }
+
+    public Product(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }
