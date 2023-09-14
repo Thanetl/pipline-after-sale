@@ -47,12 +47,17 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # sonarscanner:
-  #   image: sonarsource/sonar-scanner-cli
-  #   environment:
-  #     - SONAR_HOST_URL=http://10.9.50.224:9000
-  #     - SONAR_LOGIN=admin
-  #     - SONAR_PASSWORD=P@ssw0rd
-  #     - SONAR_PROJECT_BASE_DIR=/api
-  #   volumes:
-  #     - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
+  sonarscanner:
+    image: sonarsource/sonar-scanner-cli
+    environment:
+      - SONAR_HOST_URL=http://10.9.50.224:9000
+      - SONAR_LOGIN=admin
+      - SONAR_PASSWORD=P@ssw0rd
+      - SONAR_PROJECT_BASE_DIR=/api
+    volumes:
+      - ./api/after-sale-api:/api  # Replace with the actual path to your project directory
+
+  ui_test:
+    build: ./web/ui-test
+    volumes:
+      - ./ui-test-report:/app/report
