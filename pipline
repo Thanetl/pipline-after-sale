@@ -7,28 +7,29 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Thanetl/pipline-after-sale.git'
             }
         }
-        stage('1.2 Scan Code') {
-            
+        stage('1.1 Scan Code') {
+            steps {
+                build wait: false, job: 'sonar_scan'
+            }
         }
         stage('2. Build images') {
             steps {
                 echo 'Build'
-                sh 'docker compose build api'
+                bat 'docker compose build api'
+                bat 'docker compose build angular'
             }
         }
-        stage('3. Push image to registry') {
-            
-        }
-        stage('4. Deploy on dev server') {
+        stage('3. Deploy on dev server') {
             steps {
-                sh 'docker compose up -d api'
+                bat 'docker compose up -d api'
+                bat 'docker compose up -d angular'
             }
         }
-        stage('5. API testing') {
-           
-        }
-        stage('6. UI testing') {
-            
+        stage('4. Testing') {
+            steps {
+                bat 'docker compose up -d api_test --build'
+                bat 'docker compose up -d ui_test --build'
+            }
         }
     }
 }

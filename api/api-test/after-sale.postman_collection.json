@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "924078a1-6ca8-40b8-ae99-8fd98cdde839",
+		"name": "after-sale",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29159151"
+	},
+	"item": [
+		{
+			"name": "getProducts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const products = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify response structure for each product\", function () {\r",
+							"    pm.expect(products).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    products.forEach((product, index) => {\r",
+							"        pm.test(`Product ${index + 1} has the correct properties and values`, function () {\r",
+							"            pm.expect(product).to.have.property('id').that.is.a('number');\r",
+							"            pm.expect(product).to.have.property('name').that.is.a('string');\r",
+							"            pm.expect(product).to.have.property('description').that.is.a('string');\r",
+							"            pm.expect(product).to.have.property('price').that.is.a('number');\r",
+							"        });\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"api"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200 Created\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const product = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify response structure for the created product\", function () {\r",
+							"    pm.expect(product).to.have.property('id').that.is.a('number');\r",
+							"    pm.expect(product).to.have.property('name').that.is.a('string').and.equals(\"Product test\");\r",
+							"    pm.expect(product).to.have.property('description').that.is.a('string').and.equals(\"Description test\");\r",
+							"    pm.expect(product).to.have.property('price').that.is.a('number').and.equals(10.99);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Product test\",\r\n        \"description\": \"Description test\",\r\n        \"price\": 10.99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"api"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -61,3 +61,9 @@ services:
     build: ./web/ui-test
     volumes:
       - ./ui-test-report:/app/report
+
+  api_test:
+    build: ./api/api-test
+    tty: true
+    volumes:
+      - ./api-test-report:/etc/newman/newman
